@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For My Kashish 💕</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --rose: #c9667a;
+    --rose-light: #f7e8ec;
+    --rose-pale: #fdf2f5;
+    --rose-dark: #8b3a4d;
+    --gold: #c9a96e;
+    --cream: #fffaf7;
+    --text: #3a1f28;
+    --text-muted: #8a6070;
+    --petal: #f0c8d2;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Jost', sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* Custom cursor */
+  .cursor {
+    position: fixed;
+    width: 12px; height: 12px;
+    background: var(--rose);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%,-50%);
+    transition: transform 0.1s ease;
+  }
+  .cursor-ring {
+    position: fixed;
+    width: 36px; height: 36px;
+    border: 1.5px solid var(--rose);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%,-50%);
+    transition: all 0.15s ease;
+    opacity: 0.5;
+  }
+
+  /* Petals animation */
+  .petals-container {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 1;
+    overflow: hidden;
+  }
+
+  .petal {
+    position: absolute;
+    top: -30px;
+    width: 14px; height: 18px;
+    background: var(--petal);
+    border-radius: 50% 0 50% 0;
+    opacity: 0;
+    animation: fall linear infinite;
+  }
+
+  @keyframes fall {
+    0% { opacity: 0; transform: translateY(0) rotate(0deg) scale(0.8); }
+    10% { opacity: 0.7; }
+    90% { opacity: 0.4; }
+    100% { opacity: 0; transform: translateY(105vh) rotate(360deg) scale(1.1); }
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2.5rem;
+    padding: 1.2rem 2rem;
+    background: rgba(255,250,247,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(201,102,122,0.12);
+  }
+
+  nav a {
+    font-family: 'Jost', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  nav a:hover { color: var(--rose); }
+
+  /* HERO */
+  #hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    padding: 6rem 2rem 4rem;
+    overflow: hidden;
+    z-index: 2;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 70% 60% at 50% 40%, rgba(249,228,235,0.9) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 40% at 20% 80%, rgba(247,232,236,0.5) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 40% at 80% 20%, rgba(247,232,236,0.5) 0%, transparent 60%);
+  }
+
+  .hero-ornament {
+    font-size: 1.2rem;
+    color: var(--rose);
+    letter-spacing: 0.4em;
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 1s 0.3s ease forwards;
+  }
+
+  .hero-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(5rem, 14vw, 11rem);
+    font-weight: 300;
+    line-height: 1;
+    color: var(--rose-dark);
+    letter-spacing: -0.02em;
+    opacity: 0;
+    animation: fadeUp 1.2s 0.6s ease forwards;
+  }
+
+  .hero-name em {
+    font-style: italic;
+    color: var(--rose);
+  }
+
+  .hero-subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1rem, 2.5vw, 1.4rem);
+    font-style: italic;
+    color: var(--text-muted);
+    margin-top: 1.5rem;
+    letter-spacing: 0.06em;
+    opacity: 0;
+    animation: fadeUp 1s 1s ease forwards;
+  }
+
+  .hero-scroll {
+    position: absolute;
+    bottom: 2.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    opacity: 0;
+    animation: fadeUp 1s 1.5s ease forwards;
+  }
+
+  .hero-scroll span {
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--rose);
+  }
+
+  .scroll-line {
+    width: 1px;
+    height: 50px;
+    background: linear-gradient(to bottom, var(--rose), transparent);
+    animation: scrollPulse 2s ease-in-out infinite;
+  }
+
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 1; transform: scaleY(1); }
+    50% { opacity: 0.4; transform: scaleY(0.7); }
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* SECTION BASE */
+  section {
+    position: relative;
+    z-index: 2;
+    padding: 6rem 2rem;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--rose);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    max-width: 60px;
+    height: 1px;
+    background: var(--rose);
+    opacity: 0.4;
+  }
+
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    font-weight: 300;
+    line-height: 1.1;
+    color: var(--rose-dark);
+    margin-bottom: 3rem;
+  }
+
+  .section-title em {
+    font-style: italic;
+    color: var(--rose);
+  }
+
+  /* DIVIDER */
+  .divider {
+    text-align: center;
+    padding: 2rem 0;
+    color: var(--rose);
+    font-size: 1.2rem;
+    letter-spacing: 1rem;
+    opacity: 0.4;
+    z-index: 2;
+    position: relative;
+  }
+
+  /* OUR STORY / TIMELINE */
+  #story { padding-top: 8rem; }
+
+  .timeline {
+    position: relative;
+    padding-left: 2rem;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 8px;
+    bottom: 8px;
+    width: 1px;
+    background: linear-gradient(to bottom, var(--rose), var(--petal), transparent);
+  }
+
+  .timeline-item {
+    position: relative;
+    padding: 0 0 3.5rem 2.5rem;
+    opacity: 0;
+    transform: translateX(-20px);
+    transition: all 0.7s ease;
+  }
+
+  .timeline-item.visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .timeline-dot {
+    position: absolute;
+    left: -5px;
+    top: 6px;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--rose);
+    border: 2px solid var(--cream);
+    box-shadow: 0 0 0 3px rgba(201,102,122,0.2);
+  }
+
+  .timeline-date {
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--rose);
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+  }
+
+  .timeline-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem;
+    font-weight: 400;
+    color: var(--rose-dark);
+    margin-bottom: 0.6rem;
+  }
+
+  .timeline-desc {
+    font-size: 0.92rem;
+    line-height: 1.8;
+    color: var(--text-muted);
+    max-width: 500px;
+  }
+
+  /* LOVE LETTER */
+  #letter {
+    background: linear-gradient(135deg, rgba(247,232,236,0.5) 0%, rgba(255,250,247,0) 100%);
+    border-radius: 2px;
+    padding: 6rem 2rem;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .letter-card {
+    background: white;
+    border: 1px solid rgba(201,102,122,0.12);
+    border-radius: 2px;
+    padding: 4rem;
+    box-shadow: 0 20px 60px rgba(201,102,122,0.06);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .letter-card::before {
+    content: '❝';
+    position: absolute;
+    top: 2rem; left: 2.5rem;
+    font-size: 8rem;
+    font-family: 'Cormorant Garamond', serif;
+    color: var(--rose-light);
+    line-height: 1;
+    pointer-events: none;
+  }
+
+  .letter-salutation {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    font-style: italic;
+    color: var(--rose);
+    margin-bottom: 2rem;
+  }
+
+  .letter-body {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.15rem;
+    line-height: 2;
+    color: var(--text);
+    font-style: italic;
+  }
+
+  .letter-body p + p { margin-top: 1.2rem; }
+
+  .letter-sign {
+    margin-top: 2.5rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem;
+    color: var(--rose-dark);
+    font-style: italic;
+  }
+
+  /* REASONS */
+  #reasons { padding-bottom: 2rem; }
+
+  .reasons-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .reason-card {
+    background: white;
+    border: 1px solid rgba(201,102,122,0.1);
+    border-radius: 2px;
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s ease;
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  .reason-card.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .reason-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(to right, var(--rose), var(--petal));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
+  }
+
+  .reason-card:hover::after { transform: scaleX(1); }
+  .reason-card:hover { box-shadow: 0 12px 40px rgba(201,102,122,0.1); }
+
+  .reason-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3.5rem;
+    font-weight: 300;
+    color: var(--rose-light);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+
+  .reason-text {
+    font-size: 0.92rem;
+    line-height: 1.7;
+    color: var(--text-muted);
+  }
+
+  .reason-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem;
+    color: var(--rose-dark);
+    margin-bottom: 0.4rem;
+  }
+
+  /* WISHES */
+  #wishes { padding-top: 4rem; }
+
+  .wishes-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.8rem;
+  }
+
+  .wish-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.5rem;
+    padding: 1.8rem;
+    background: white;
+    border-left: 2px solid var(--rose);
+    transition: all 0.3s ease;
+    opacity: 0;
+    transform: translateX(-15px);
+  }
+
+  .wish-item.visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .wish-item:hover {
+    background: var(--rose-pale);
+    transform: translateX(6px);
+  }
+
+  .wish-icon {
+    font-size: 1.5rem;
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+  }
+
+  .wish-content h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.25rem;
+    color: var(--rose-dark);
+    margin-bottom: 0.4rem;
+  }
+
+  .wish-content p {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+  }
+
+  /* FOOTER */
+  footer {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    padding: 4rem 2rem;
+    background: var(--rose-dark);
+    color: rgba(255,255,255,0.6);
+  }
+
+  .footer-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.5rem, 8vw, 5rem);
+    font-weight: 300;
+    font-style: italic;
+    color: rgba(255,255,255,0.15);
+    letter-spacing: 0.08em;
+    line-height: 1;
+    margin-bottom: 1rem;
+  }
+
+  .footer-heart {
+    font-size: 1.5rem;
+    display: block;
+    margin: 1rem 0;
+    color: var(--petal);
+  }
+
+  .footer-msg {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    font-style: italic;
+    color: rgba(255,255,255,0.5);
+  }
+
+  /* Floating hearts background */
+  .hearts-bg {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+
+  /* Scroll animations */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(25px);
+    transition: all 0.8s ease;
+  }
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ── RESPONSIVE ── */
+
+  /* Tablet: 600–900px */
+  @media (max-width: 900px) {
+    section { padding: 4rem 1.5rem; }
+    #story { padding-top: 6rem; }
+    .reasons-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  /* Mobile: ≤600px */
+  @media (max-width: 600px) {
+    /* Hide custom cursor on touch devices */
+    .cursor, .cursor-ring { display: none; }
+    body { cursor: auto; }
+
+    /* Nav — horizontal scroll strip */
+    nav {
+      gap: 0;
+      padding: 0;
+      justify-content: flex-start;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    nav::-webkit-scrollbar { display: none; }
+    nav a {
+      flex-shrink: 0;
+      padding: 1rem 1.1rem;
+      font-size: 0.7rem;
+    }
+
+    /* Hero */
+    #hero { padding: 7rem 1.2rem 5rem; }
+    .hero-ornament { font-size: 0.85rem; letter-spacing: 0.2em; }
+    .hero-subtitle { font-size: 1rem; margin-top: 1rem; padding: 0 0.5rem; }
+
+    /* Sections */
+    section { padding: 3.5rem 1.2rem; max-width: 100%; }
+    #story { padding-top: 5rem; }
+    #letter { padding: 3.5rem 1.2rem; }
+
+    .section-title { margin-bottom: 2rem; }
+
+    /* Timeline */
+    .timeline { padding-left: 1.2rem; }
+    .timeline-item { padding: 0 0 2.5rem 1.8rem; }
+    .timeline-title { font-size: 1.35rem; }
+    .timeline-desc { font-size: 0.88rem; }
+
+    /* Letter */
+    .letter-card { padding: 2rem 1.2rem 1.8rem; }
+    .letter-card::before { font-size: 4rem; top: 0.8rem; left: 1rem; }
+    .letter-salutation { font-size: 1.25rem; }
+    .letter-body { font-size: 1rem; line-height: 1.85; }
+    .letter-sign { font-size: 1.1rem; }
+
+    /* Reasons */
+    .reasons-grid { grid-template-columns: 1fr; gap: 1rem; }
+    .reason-num { font-size: 2.8rem; }
+
+    /* Wishes */
+    .wish-item { padding: 1.3rem; gap: 1rem; flex-direction: row; align-items: flex-start; }
+    .wish-icon { font-size: 1.3rem; }
+    .wish-content h3 { font-size: 1.1rem; }
+    .wish-content p { font-size: 0.86rem; }
+
+    /* Divider */
+    .divider { letter-spacing: 0.5rem; font-size: 1rem; }
+
+    /* Footer */
+    footer { padding: 3rem 1.2rem; }
+    .footer-name { font-size: clamp(2rem, 12vw, 3.5rem); }
+  }
+
+  /* Very small: ≤380px */
+  @media (max-width: 380px) {
+    nav a { padding: 0.9rem 0.85rem; font-size: 0.65rem; }
+    .letter-card { padding: 1.6rem 1rem; }
+    .wish-item { padding: 1.1rem 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Custom Cursor -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- Falling Petals -->
+<div class="petals-container" id="petals"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="#hero">Home</a>
+  <a href="#story">Our Story</a>
+  <a href="#letter">Letter</a>
+  <a href="#reasons">Reasons</a>
+  <a href="#wishes">Wishes</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-ornament">✦ &nbsp; made with love &nbsp; ✦</div>
+  <h1 class="hero-name">Kashi<em>sh</em></h1>
+  <p class="hero-subtitle">A little corner of the internet — just for you, my love.</p>
+  <div class="hero-scroll">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<div class="divider">✦ &nbsp;&nbsp; ✦ &nbsp;&nbsp; ✦</div>
+
+<!-- OUR STORY -->
+<section id="story">
+  <div class="section-label">Chapter One</div>
+  <h2 class="section-title">Our <em>Story</em></h2>
+
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-date">The Beginning</div>
+      <div class="timeline-title">The Day Everything Changed</div>
+      <p class="timeline-desc">There are moments in life that quietly rearrange everything. Meeting you was one of them. I didn't know then that this would be the start of something that would become the most beautiful part of my life.</p>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-date">Getting to Know You</div>
+      <div class="timeline-title">Every Conversation, a Gift</div>
+      <p class="timeline-desc">Late nights, long talks, little laughs — I was falling without even realising it. Every message, every moment felt like discovering a whole new world I never knew I needed.</p>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-date">The Moment I Knew</div>
+      <div class="timeline-title">I Chose You, Every Time</div>
+      <p class="timeline-desc">It wasn't a single grand moment. It was a thousand small ones — the way you laugh, the way you care, the way you see me. That's when I knew: this is her. This is my person.</p>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-date">Us — 1+ Year &amp; Counting</div>
+      <div class="timeline-title">Still Falling</div>
+      <p class="timeline-desc">A year of growing together, of learning each other's silences and smiles. And somehow, with every passing day, I love you a little more than I did yesterday.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider">✦ &nbsp;&nbsp; ✦ &nbsp;&nbsp; ✦</div>
+
+<!-- LOVE LETTER -->
+<section id="letter">
+  <div class="section-label">From My Heart</div>
+  <h2 class="section-title">A <em>Letter</em> For You</h2>
+
+  <div class="letter-card fade-in">
+    <div class="letter-salutation">My dearest Kashish,</div>
+    <div class="letter-body">
+      <p>There are a thousand things I want to say to you and never enough words to say them right. So let me try, imperfectly but sincerely.</p>
+      <p>You walked into my life and made it brighter — not in a flashy, loud way, but in that quiet, steady way that matters most. The way sunlight fills a room without asking permission.</p>
+      <p>You are my favourite kind of wonderful. The kind that gets better the more I know you. The kind that makes ordinary days feel like something worth remembering.</p>
+      <p>I love the way you are — your strength, your softness, your laugh that I'd travel any distance to hear. I love that you are exactly you, and that you let me be here beside you.</p>
+      <p>Thank you for every moment. For the good ones, the hard ones, and all the ones in between. I wouldn't trade a single one of them.</p>
+      <p>You deserve every beautiful thing — and I hope, every single day, to be a small part of that.</p>
+    </div>
+    <div class="letter-sign">Forever yours, with all my heart. 🌹</div>
+  </div>
+</section>
+
+<div class="divider">✦ &nbsp;&nbsp; ✦ &nbsp;&nbsp; ✦</div>
+
+<!-- REASONS I LOVE YOU -->
+<section id="reasons">
+  <div class="section-label">From the Heart</div>
+  <h2 class="section-title">Reasons I <em>Love</em> You</h2>
+
+  <div class="reasons-grid">
+
+    <div class="reason-card">
+      <div class="reason-num">01</div>
+      <div class="reason-title">Your laugh</div>
+      <p class="reason-text">It's completely contagious. Even on my worst days, hearing you laugh fixes something inside me that I didn't know was broken.</p>
+    </div>
+
+    <div class="reason-card">
+      <div class="reason-num">02</div>
+      <div class="reason-title">The way you care</div>
+      <p class="reason-text">You have this quiet, deep way of caring that most people don't even notice — but I do. Every single time. It takes my breath away.</p>
+    </div>
+
+    <div class="reason-card">
+      <div class="reason-num">03</div>
+      <div class="reason-title">Your strength</div>
+      <p class="reason-text">You carry so much and still show up with grace. You're stronger than you know, and I'm in awe of you every day.</p>
+    </div>
+
+    <div class="reason-card">
+      <div class="reason-num">04</div>
+      <div class="reason-title">How you see the world</div>
+      <p class="reason-text">Your perspective is like nothing else. Talking to you makes everything feel richer, deeper, more worth paying attention to.</p>
+    </div>
+
+    <div class="reason-card">
+      <div class="reason-num">05</div>
+      <div class="reason-title">Your honesty</div>
+      <p class="reason-text">You say what you mean and mean what you say. In a world full of noise, your realness is everything to me.</p>
+    </div>
+
+    <div class="reason-card">
+      <div class="reason-num">06</div>
+      <div class="reason-title">Simply being you</div>
+      <p class="reason-text">Not any one thing — just the whole of you. Every little piece, perfectly Kashish. That's reason enough for a lifetime.</p>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider">✦ &nbsp;&nbsp; ✦ &nbsp;&nbsp; ✦</div>
+
+<!-- WISHES & FUTURE -->
+<section id="wishes">
+  <div class="section-label">Looking Ahead</div>
+  <h2 class="section-title">Wishes &amp; <em>Dreams</em></h2>
+
+  <div class="wishes-list">
+
+    <div class="wish-item">
+      <div class="wish-icon">🌸</div>
+      <div class="wish-content">
+        <h3>A life full of peace</h3>
+        <p>I wish for you a life where you always feel safe, loved, and at peace — a life where your worries are few and your joys are many.</p>
+      </div>
+    </div>
+
+    <div class="wish-item">
+      <div class="wish-icon">✨</div>
+      <div class="wish-content">
+        <h3>Every dream realised</h3>
+        <p>I want to see every goal you've whispered to yourself at night come true. I believe in your dreams even on the days you forget to. I'll always be your biggest fan.</p>
+      </div>
+    </div>
+
+    <div class="wish-item">
+      <div class="wish-icon">🫂</div>
+      <div class="wish-content">
+        <h3>Adventures together</h3>
+        <p>New cities, new food, new memories — I want to see the world with you by my side. Every journey is better when you're in it.</p>
+      </div>
+    </div>
+
+    <div class="wish-item">
+      <div class="wish-icon">🌙</div>
+      <div class="wish-content">
+        <h3>A thousand more nights like this</h3>
+        <p>Cozy, quiet, together — the simple moments that become the ones we treasure most. I want a lifetime of those with you.</p>
+      </div>
+    </div>
+
+    <div class="wish-item">
+      <div class="wish-icon">💐</div>
+      <div class="wish-content">
+        <h3>To make you proud every day</h3>
+        <p>More than anything, I want to be someone worthy of you. To grow with you, support you, and make you smile as often as I possibly can.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-name">Kashish</div>
+  <span class="footer-heart">♥</span>
+  <p class="footer-msg">Made with love, for the one who makes everything better.</p>
+</footer>
+
+<script>
+// Custom cursor — desktop only
+const cursor = document.getElementById('cursor');
+const ring = document.getElementById('cursorRing');
+const isTouchDevice = window.matchMedia('(hover: none)').matches;
+let mx = 0, my = 0, rx = 0, ry = 0;
+
+if (!isTouchDevice) {
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    cursor.style.left = mx + 'px';
+    cursor.style.top = my + 'px';
+  });
+  function animateRing() {
+    rx += (mx - rx) * 0.12;
+    ry += (my - ry) * 0.12;
+    ring.style.left = rx + 'px';
+    ring.style.top = ry + 'px';
+    requestAnimationFrame(animateRing);
+  }
+  animateRing();
+} else {
+  cursor.style.display = 'none';
+  ring.style.display = 'none';
+  document.body.style.cursor = 'auto';
+}
+
+// Falling petals
+const petalContainer = document.getElementById('petals');
+const petalColors = ['#f9c8d8', '#f2b8c8', '#fde0e8', '#f5d0dc', '#e8b8c8'];
+
+function createPetal() {
+  const p = document.createElement('div');
+  p.className = 'petal';
+  p.style.left = Math.random() * 100 + 'vw';
+  p.style.background = petalColors[Math.floor(Math.random() * petalColors.length)];
+  p.style.width = (10 + Math.random() * 10) + 'px';
+  p.style.height = (12 + Math.random() * 12) + 'px';
+  p.style.animationDuration = (6 + Math.random() * 8) + 's';
+  p.style.animationDelay = (Math.random() * 5) + 's';
+  p.style.opacity = 0;
+  p.style.transform = `rotate(${Math.random() * 360}deg)`;
+  petalContainer.appendChild(p);
+  setTimeout(() => p.remove(), 16000);
+}
+
+setInterval(createPetal, 600);
+for (let i = 0; i < 8; i++) setTimeout(createPetal, i * 300);
+
+// Intersection Observer for animations
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const el = entry.target;
+      const delay = el.dataset.delay || 0;
+      setTimeout(() => el.classList.add('visible'), delay);
+    }
+  });
+}, { threshold: 0.15 });
+
+document.querySelectorAll('.timeline-item').forEach((el, i) => {
+  el.dataset.delay = i * 180;
+  observer.observe(el);
+});
+
+document.querySelectorAll('.reason-card').forEach((el, i) => {
+  el.dataset.delay = i * 100;
+  observer.observe(el);
+});
+
+document.querySelectorAll('.wish-item').forEach((el, i) => {
+  el.dataset.delay = i * 130;
+  observer.observe(el);
+});
+
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
